@@ -1,3 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveEnjoy Creative - Digital Agency</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #1a1b26;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background-color: #1a1b26;
+            z-index: 1000;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1001;
+            /* Keep logo above mobile menu */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            /* Keep burger above mobile menu */
+        }
+
+        .burger-bar {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Animation classes for burger menu */
+        .burger-menu.active .bar1 {
+            transform: rotate(-45deg) translate(-7px, 6px);
+        }
+
+        .burger-menu.active .bar2 {
+            opacity: 0;
+        }
+
+        .burger-menu.active .bar3 {
+            transform: rotate(45deg) translate(-7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1a1b26;
+            padding-top: 100px;
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 20px;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .burger-menu {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+        }
+
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 0;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .trusted-label {
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-description {
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #ffd700;
+            color: #1a1b26;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Clients */
+        .clients {
+            padding: 50px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            opacity: 0.5;
+        }
+
+        .client-logo {
+            height: 30px;
+        }
+
+        /* Services */
+        .services {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .services-heading {
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        .services-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: #252632;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .service-icon {
+            color: #ffd700;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .service-name {
+            margin-bottom: 10px;
+        }
+
+        .project-count {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: #252632;
+            margin: 40px 0;
+            border-radius: 20px;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            background-color: #252632;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .contact-info-item {
+            margin-bottom: 20px;
+        }
+
+        .contact-info-item h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input,
+        textarea {
+            background-color: #252632;
+            border: 1px solid #444;
+            padding: 12px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #252632;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .clients {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Add styles for form success/error messages */
+            .form-message {
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+                display: none;
+            }
+
+            .form-message.success {
+                background-color: rgba(0, 255, 0, 0.1);
+                color: #00ff00;
+                border: 1px solid #00ff00;
+                display: block;
+            }
+
+            .form-message.error {
+                background-color: rgba(255, 0, 0, 0.1);
+                color: #ff0000;
+                border: 1px solid #ff0000;
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">LiveEnjoy</div>
+            <div class="nav-links">
+                <a href="#what-we-do">What We Do</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="burger-menu">
+                <div class="burger-bar bar1"></div>
+                <div class="burger-bar bar2"></div>
+                <div class="burger-bar bar3"></div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="#what-we-do">What We Do</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="trusted-label">A TRUSTED DIGITAL AGENCY</div>
+                <h1>Quality Digital Service You Really Want</h1>
+                <p class="hero-description">We are delivering top level digital services with our best experienced team,
+                    just get started with us.</p>
+                <a href="#contact"><button class="cta-button">LET'S TALK</button></a>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">16+</div>
+                        <div class="stat-label">Years of experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Complete Project</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2000+</div>
+                        <div class="stat-label">Happy Client</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/600/400" alt="Modern office workspace">
+            </div>
+        </section>
+
+        <!-- <section class="clients">
+            <a href="https://airbnb.com" target="_blank"><img src="/api/placeholder/100/30" alt="Airbnb"
+                    class="client-logo"></a>
+            <a href="https://asana.com" target="_blank"><img src="/api/placeholder/100/30" alt="Asana"
+                    class="client-logo"></a>
+            <a href="https://grammarly.com" target="_blank"><img src="/api/placeholder/100/30" alt="Grammarly"
+                    class="client-logo"></a>
+            <a href="https://dropbox.com" target="_blank"><img src="/api/placeholder/100/30" alt="Dropbox"
+                    class="client-logo"></a>
+            <a href="https://gumroad.com" target="_blank"><img src="/api/placeholder/100/30" alt="Gumroad"
+                    class="client-logo"></a>
+        </section> -->
+
+        <section class="services" id="what-we-do">
+            <div class="services-heading">OUR SERVICES</div>
+            <h2 class="services-title">Save Time Managing Your Business<br>with Our Best Service</h2>
+
+            <div class="services-grid">
+                <div>
+                    <div class="service-icon">💻</div>
+                    <h3 class="service-name">Website Design</h3>
+                    <div class="project-count">4 Project</div>
+                </div>
+                <div>
+                    <div class="service-icon">📱</div>
+                    <h3 class="service-name">Mobile App Design</h3>
+                    <div class="project-count">2 Project</div>
+                </div>
+                <div>
+                    <div class="service-icon">🖥️</div>
+                    <h3 class="service-name">Platform</h3>
+                    <div class="project-count">1 Project</div>
+                </div>
+                <div>
+                    <div class="service-icon">🔄</div>
+                    <h3 class="service-name">Webflow Development</h3>
+                    <div class="project-count">3 Project</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="trusted-label">ABOUT US</div>
+                    <h2>We Are Digital Agency That Helps Businesses Succeed</h2>
+                    <p style="margin: 20px 0; color: #888;">
+                        With over 3 years of experience in digital solutions, we've helped hundreds of businesses
+                        transform their digital presence. Our team of experts combines creativity with technical
+                        excellence to deliver outstanding results.
+                    </p>
+                    <a href="#contact"><button class="cta-button">Get In Touch</button></a>
+                </div>
+                <div class="about-image">
+                    <img src="/api/placeholder/500/300" alt="Our team at work">
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="services-heading">CONTACT US</div>
+            <h2 class="services-title">Get In Touch With Us</h2>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <h4>Address</h4>
+                        <p>9/356, Rama 2 Soi 74, Samdam Subdistrict, Bang Khun Thian District, Bangkok, Thailand</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h4>Email</h4>
+                        <p>liveenjoysystem@gmail.com</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h4>Phone</h4>
+                        <p>+66 82 240 1880</p>
+                    </div>
+                    <div class="contact-info-item">
+                        <h4>Working Hours</h4>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+
                 <form id="contactForm" class="contact-form" action="mailto:liveenjoysystem@gmail.com" method="POST" enctype="text/plain">
                     <div class="form-message"></div>
                     <div class="form-group">
@@ -14,3 +583,89 @@
                     </div>
                     <button type="submit" class="cta-button">Send Message</button>
                 </form>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">LiveEnjoy</div>
+                <div class="social-links">
+                   <!-- <a href="https://facebook.com" target="_blank">Facebook</a>
+                    <a href="https://twitter.com" target="_blank">Twitter</a>
+                    <a href="https://instagram.com" target="_blank">Instagram</a> -->
+                    <a href="https://linkedin.com" target="_blank">LINE</a> 
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        const burgerMenu = document.querySelector('.burger-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const body = document.body;
+
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                burgerMenu.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                body.style.overflow = 'auto';
+            });
+        });
+
+        // Add smooth scroll behavior for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form handling
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.querySelector('.form-message');
+
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Create formatted email body
+            const emailBody = `Name: ${name}Email: ${email}Message:${message}`;
+
+            // Create mailto link with formatted body
+            const mailtoLink = `mailto:liveenjoysystem@gmail.com?subject=Contact Form Submission from ${name}&body=${encodeURIComponent(emailBody)}`;
+
+            // Open email client
+            window.location.href = mailtoLink;
+
+            // Show success message
+            formMessage.textContent = 'Thank you! Your email client should open to send the message.';
+            formMessage.className = 'form-message success';
+
+            // Reset form
+            contactForm.reset();
+
+            // Alternative backup submission using POST method
+            // For when mailto doesn't work or is not preferred
+            const backupSubmit = document.createElement('a');
+            backupSubmit.href = mailtoLink;
+            backupSubmit.style.display = 'block';
+            backupSubmit.style.marginTop = '10px';
+            backupSubmit.textContent = 'Click here if your email client did not open automatically';
+            formMessage.appendChild(backupSubmit);
+        });
+    </script>
